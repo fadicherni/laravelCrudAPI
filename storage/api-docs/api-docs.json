@@ -1,0 +1,267 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "L5 OpenApi",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "darius@matulionis.lt"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "paths": {
+        "/api/pet/{petId}": {
+            "get": {
+                "description": "Get a pet by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of pet to return",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pet/findByStatus": {
+            "get": {
+                "description": "Get pets by status Available values : available, pending, sold",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of pets to return",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "availble",
+                                    "pending",
+                                    "sold"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pets/": {
+            "get": {
+                "description": "Get all pets",
+                "responses": {
+                    "default": {
+                        "description": "success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pet": {
+            "put": {
+                "description": "add pet",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "pet name",
+                        "required": true
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of the pet",
+                        "required": true
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Pet category_id",
+                        "required": true
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "description": "pet tags",
+                        "required": true
+                    },
+                    {
+                        "name": "photos[added][]",
+                        "in": "query",
+                        "description": "pet image",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "description": "add pet",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "examples": {
+                                "add pet": {
+                                    "summary": "add pet",
+                                    "value": {
+                                        "name": "test",
+                                        "status": "availble",
+                                        "category": {
+                                            "id": "2",
+                                            "name": "pitbull"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Added succesfully"
+                    },
+                    "default": {
+                        "description": "unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pet/{id}": {
+            "delete": {
+                "description": "deletes a single pet based on the ID supplied",
+                "operationId": "deletePet",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of pet to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "pet deleted"
+                    },
+                    "default": {
+                        "description": "unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "Authenticate with email and password ",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "examples": {
+                                "test login": {
+                                    "summary": "test login",
+                                    "value": {
+                                        "email": "xxxx@xxx.com",
+                                        "password": "********"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "login success"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "description": "register with email ,name and password ",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "examples": {
+                                "test register": {
+                                    "summary": "test register",
+                                    "value": {
+                                        "email": "ffff@gmail.com",
+                                        "password": "******",
+                                        "name": "xxxxx",
+                                        "password_confirmation": "******"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "user added "
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
